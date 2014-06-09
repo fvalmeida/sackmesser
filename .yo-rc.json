@@ -1,0 +1,17 @@
+{
+  "generator-jhipster": {
+    "baseName": "sackmesser",
+    "packageName": "org.sackmesser",
+    "packageFolder": "org/sackmesser",
+    "authenticationType": "token",
+    "hibernateCache": "ehcache",
+    "clusteredHttpSession": "no",
+    "websocket": "no",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Memory",
+    "prodDatabaseType": "mysql",
+    "useCompass": true,
+    "frontendBuilder": "grunt",
+    "javaVersion": "8"
+  }
+}

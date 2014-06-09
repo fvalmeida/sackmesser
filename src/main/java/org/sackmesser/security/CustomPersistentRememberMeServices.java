@@ -1,12 +1,11 @@
 package org.sackmesser.security;
 
+import lombok.extern.slf4j.Slf4j;
+import org.joda.time.LocalDate;
 import org.sackmesser.domain.PersistentToken;
 import org.sackmesser.domain.User;
 import org.sackmesser.repository.PersistentTokenRepository;
 import org.sackmesser.repository.UserRepository;
-import org.joda.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.Authentication;
@@ -49,11 +48,10 @@ import java.util.Arrays;
  * couldn't be cleanly extended.
  * <p/>
  */
+@Slf4j
 @Service
 public class CustomPersistentRememberMeServices extends
         AbstractRememberMeServices {
-
-    private final Logger log = LoggerFactory.getLogger(CustomPersistentRememberMeServices.class);
 
     // Token is valid for one month
     private static final int TOKEN_VALIDITY_DAYS = 31;
@@ -74,7 +72,7 @@ public class CustomPersistentRememberMeServices extends
 
     @Inject
     public CustomPersistentRememberMeServices(Environment env, org.springframework.security.core.userdetails.UserDetailsService userDetailsService) {
-    
+
         super(env.getProperty("jhipster.security.rememberme.key"), userDetailsService);
         random = new SecureRandom();
     }

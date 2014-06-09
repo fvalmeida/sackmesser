@@ -14,32 +14,6 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
     private static final Result HEALTHY = new Result(true, null, null);
 
     /**
-     * @return the name of the indicator
-     */
-    protected abstract String getHealthCheckIndicatorName();
-
-    /**
-     * Perform a check of the application component.
-     *
-     * @return if the component is healthy, a healthy Result; otherwise, an unhealthy Result
-     *          with a descriptive error message or/and exception
-     * @throws Exception if there is an unhandled error during the health check; this will result in
-     *                   a failed health check
-     */
-    protected abstract Result check() throws Exception;
-
-    @Override
-    final public Map<String, Result> health() {
-        Map<String, Result> results = new LinkedHashMap<>();
-        try {
-            results.put(getHealthCheckIndicatorName(), check());
-        } catch (Exception e) {
-            results.put(getHealthCheckIndicatorName(), unhealthy(e));
-        }
-        return results;
-    }
-
-    /**
      * @return a healthy Result with no additional message
      */
     public static Result healthy() {
@@ -72,11 +46,37 @@ public abstract class HealthCheckIndicator implements HealthIndicator<Map<String
 
     /**
      * @param message an informative message describing how the health check indicator failed
-     * @param error an exception thrown during the health check
+     * @param error   an exception thrown during the health check
      * @return an unhealthy Result with the given error
      */
     public static Result unhealthy(String message, Throwable error) {
         return new Result(false, message, error);
+    }
+
+    /**
+     * @return the name of the indicator
+     */
+    protected abstract String getHealthCheckIndicatorName();
+
+    /**
+     * Perform a check of the application component.
+     *
+     * @return if the component is healthy, a healthy Result; otherwise, an unhealthy Result
+     * with a descriptive error message or/and exception
+     * @throws Exception if there is an unhandled error during the health check; this will result in
+     *                   a failed health check
+     */
+    protected abstract Result check() throws Exception;
+
+    @Override
+    final public Map<String, Result> health() {
+        Map<String, Result> results = new LinkedHashMap<>();
+        try {
+            results.put(getHealthCheckIndicatorName(), check());
+        } catch (Exception e) {
+            results.put(getHealthCheckIndicatorName(), unhealthy(e));
+        }
+        return results;
     }
 
     /**

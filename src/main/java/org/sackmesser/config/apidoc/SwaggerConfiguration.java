@@ -25,17 +25,15 @@ public class SwaggerConfiguration implements EnvironmentAware {
     public static final String SWAGGER_GROUP = "sackmesser-api";
 
     private RelaxedPropertyResolver propertyResolver;
+    @Inject
+    private SpringSwaggerConfig springSwaggerConfig;
+    @Inject
+    private SpringSwaggerModelConfig springSwaggerModelConfig;
 
     @Override
     public void setEnvironment(Environment environment) {
         this.propertyResolver = new RelaxedPropertyResolver(environment, "swagger.");
     }
-
-    @Inject
-    private SpringSwaggerConfig springSwaggerConfig;
-
-    @Inject
-    private SpringSwaggerModelConfig springSwaggerModelConfig;
 
     /**
      * Adds the jackson scala module to the MappingJackson2HttpMessageConverter registered with spring

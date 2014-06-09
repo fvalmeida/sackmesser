@@ -1,5 +1,7 @@
 package org.sackmesser.domain;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.envers.Audited;
 import org.joda.time.DateTime;
@@ -7,11 +9,8 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
-
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
+
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -23,6 +22,8 @@ import javax.validation.constraints.NotNull;
  * <p/>
  * Created by mkh1973.
  */
+@Getter
+@Setter
 @MappedSuperclass
 @Audited
 @EntityListeners(AuditingEntityListener.class)
@@ -48,35 +49,4 @@ public abstract class AbstractAuditingEntity {
     @Column(name = "last_modified_date")
     private DateTime lastModifiedDate = DateTime.now();
 
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public DateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(DateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
-
-    public void setLastModifiedBy(String lastModifiedBy) {
-        this.lastModifiedBy = lastModifiedBy;
-    }
-
-    public DateTime getLastModifiedDate() {
-        return lastModifiedDate;
-    }
-
-    public void setLastModifiedDate(DateTime lastModifiedDate) {
-        this.lastModifiedDate = lastModifiedDate;
-    }
 }

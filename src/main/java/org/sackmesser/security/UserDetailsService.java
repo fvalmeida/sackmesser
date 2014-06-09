@@ -1,10 +1,9 @@
 package org.sackmesser.security;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sackmesser.domain.Authority;
 import org.sackmesser.domain.User;
 import org.sackmesser.repository.UserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,10 +18,9 @@ import java.util.Collection;
 /**
  * Authenticate a user from the database.
  */
+@Slf4j
 @Component("userDetailsService")
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {
-
-    private final Logger log = LoggerFactory.getLogger(UserDetailsService.class);
 
     @Inject
     private UserRepository userRepository;

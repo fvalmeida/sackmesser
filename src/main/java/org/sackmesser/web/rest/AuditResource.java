@@ -1,9 +1,9 @@
 package org.sackmesser.web.rest;
 
+import org.joda.time.LocalDateTime;
 import org.sackmesser.security.AuthoritiesConstants;
 import org.sackmesser.service.AuditEventService;
 import org.sackmesser.web.propertyeditors.LocaleDateTimeEditor;
-import org.joda.time.LocalDateTime;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +40,7 @@ public class AuditResource {
             produces = "application/json")
     @RolesAllowed(AuthoritiesConstants.ADMIN)
     public List<AuditEvent> findByDates(@RequestParam(value = "fromDate") LocalDateTime fromDate,
-                                    @RequestParam(value = "toDate") LocalDateTime toDate) {
+                                        @RequestParam(value = "toDate") LocalDateTime toDate) {
         return auditEventService.findByDates(fromDate, toDate);
     }
 }

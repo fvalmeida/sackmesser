@@ -3,8 +3,7 @@ package org.sackmesser.config;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import liquibase.integration.spring.SpringLiquibase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.EnvironmentAware;
@@ -20,13 +19,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 @Configuration
 @EnableJpaRepositories("org.sackmesser.repository")
 @EnableTransactionManagement
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfiguration implements EnvironmentAware {
-
-    private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
 
     private RelaxedPropertyResolver propertyResolver;
 
@@ -43,7 +41,7 @@ public class DatabaseConfiguration implements EnvironmentAware {
         log.debug("Configuring Datasource");
         if (propertyResolver.getProperty("url") == null && propertyResolver.getProperty("databaseName") == null) {
             log.error("Your database connection pool configuration is incorrect! The application" +
-                    "cannot start. Please check your Spring profile, current profiles are: {}",
+                            "cannot start. Please check your Spring profile, current profiles are: {}",
                     Arrays.toString(environment.getActiveProfiles()));
 
             throw new ApplicationContextException("Database connection pool is not configured correctly");

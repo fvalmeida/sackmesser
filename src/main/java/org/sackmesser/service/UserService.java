@@ -1,5 +1,7 @@
 package org.sackmesser.service;
 
+import lombok.extern.slf4j.Slf4j;
+import org.joda.time.LocalDate;
 import org.sackmesser.domain.Authority;
 import org.sackmesser.domain.PersistentToken;
 import org.sackmesser.domain.User;
@@ -8,9 +10,6 @@ import org.sackmesser.repository.PersistentTokenRepository;
 import org.sackmesser.repository.UserRepository;
 import org.sackmesser.security.SecurityUtils;
 import org.sackmesser.service.util.RandomUtil;
-import org.joda.time.LocalDate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,11 +24,10 @@ import java.util.Set;
 /**
  * Service class for managing users.
  */
+@Slf4j
 @Service
 @Transactional
 public class UserService {
-
-    private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
     private PasswordEncoder passwordEncoder;
@@ -46,15 +44,15 @@ public class UserService {
     public User activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return Optional.ofNullable(userRepository.getUserByActivationKey(key))
-            .map(user -> {
-                // activate given user for the registration key.
-                user.setActivated(true);
-                user.setActivationKey(null);
-                userRepository.save(user);
-                log.debug("Activated user: {}", user);
-                return user;
-            })
-            .orElse(null);
+                .map(user -> {
+                    // activate given user for the registration key.
+                    user.setActivated(true);
+                    user.setActivationKey(null);
+                    userRepository.save(user);
+                    log.debug("Activated user: {}", user);
+                    return user;
+                })
+                .orElse(null);
     }
 
     public User createUserInformation(String login, String password, String firstName, String lastName, String email,

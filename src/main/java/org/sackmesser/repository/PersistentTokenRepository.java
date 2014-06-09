@@ -1,8 +1,8 @@
 package org.sackmesser.repository;
 
+import org.joda.time.LocalDate;
 import org.sackmesser.domain.PersistentToken;
 import org.sackmesser.domain.User;
-import org.joda.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

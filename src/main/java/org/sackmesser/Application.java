@@ -1,8 +1,7 @@
 package org.sackmesser;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sackmesser.config.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration;
 import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
@@ -16,33 +15,17 @@ import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Arrays;
 
+@Slf4j
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 public class Application {
-
-    private final Logger log = LoggerFactory.getLogger(Application.class);
 
     @Inject
     private Environment env;
 
     /**
-     * Initializes sackmesser.
-     * <p/>
-     * Spring profiles can be configured with a program arguments --spring.profiles.active=your-active-profile
-     * <p/>
-     */
-    @PostConstruct
-    public void initApplication() throws IOException {
-        if (env.getActiveProfiles().length == 0) {
-            log.warn("No Spring profile configured, running with default configuration");
-        } else {
-            log.info("Running with Spring profile(s) : {}", Arrays.toString(env.getActiveProfiles()));
-        }
-    }
-
-    /**
      * Main method, used to run the application.
-     *
+     * <p/>
      * To run the application with hot reload enabled, add the following arguments to your JVM:
      * "-javaagent:spring_loaded/springloaded-jhipster.jar -noverify -Dspringloaded=plugins=io.github.jhipster.loaded.instrument.JHipsterLoadtimeInstrumentationPlugin"
      */
@@ -83,5 +66,20 @@ public class Application {
                 "liquibase.snapshot" + "," + "liquibase.logging" + "," + "liquibase.diff" + "," +
                 "liquibase.structure" + "," + "liquibase.structurecompare" + "," + "liquibase.lockservice" + "," +
                 "liquibase.ext" + "," + "liquibase.changelog");
+    }
+
+    /**
+     * Initializes sackmesser.
+     * <p/>
+     * Spring profiles can be configured with a program arguments --spring.profiles.active=your-active-profile
+     * <p/>
+     */
+    @PostConstruct
+    public void initApplication() throws IOException {
+        if (env.getActiveProfiles().length == 0) {
+            log.warn("No Spring profile configured, running with default configuration");
+        } else {
+            log.info("Running with Spring profile(s) : {}", Arrays.toString(env.getActiveProfiles()));
+        }
     }
 }

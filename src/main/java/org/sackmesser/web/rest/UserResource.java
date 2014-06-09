@@ -1,11 +1,10 @@
 package org.sackmesser.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import lombok.extern.slf4j.Slf4j;
 import org.sackmesser.domain.User;
 import org.sackmesser.repository.UserRepository;
 import org.sackmesser.security.AuthoritiesConstants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,11 +19,10 @@ import java.util.Optional;
 /**
  * REST controller for managing users.
  */
+@Slf4j
 @RestController
 @RequestMapping("/app")
 public class UserResource {
-
-    private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
     @Inject
     private UserRepository userRepository;

@@ -24,11 +24,11 @@ public class LogsResource {
     @Timed
     public List<LoggerDTO> getList() {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-	    return context.getLoggerList()
-	        .stream()
-	        .map(logger -> new LoggerDTO(logger))
-	        .collect(Collectors.toList());
-        
+        return context.getLoggerList()
+                .stream()
+                .map(logger -> new LoggerDTO(logger))
+                .collect(Collectors.toList());
+
     }
 
     @RequestMapping(value = "/rest/logs",
